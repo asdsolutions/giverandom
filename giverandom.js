@@ -111,13 +111,29 @@ app.post('/messages', function(req, res) {
 				
 				// event has been returned
 				// see if the user exists
-				userCollection.find({mobileNumber: phone_number}).toArray(function(err, records){
-					console.log('Finding users with mobile number: ' + phone_number);
-					if(!err && records && records.length > 0) {
-						// exists - user me!
-						user = records[0];
-						console.log('User is found with reference: ' + user.reference);
+				
+				userCollection.find({mobileNumber: phone_number}, function(err, cursor){
+					if(!err) {
+						var records = cursor.toArray(function(err, records){
+							if(!err && records && records.length > 0) {
+							// exists - user me!
+							user = records[0];
+							console.log('User is found with reference: ' + user.reference);
+							} else {
+								// doesn't exist - create me
+								user = {
+									reference: crypto.randomBytes(20).toString('hex'),
+									name: full_name,
+									mobileNumber: phone_number			
+								};
+						
+								userCollection.insert(user, {}, function() {
+									console.log('New User inserted with reference: ' + user.reference);
+								});
+							}
+						}
 					} else {
+					console.log('No Users - issue - Create one');
 						// doesn't exist - create me
 						user = {
 							reference: crypto.randomBytes(20).toString('hex'),
@@ -129,8 +145,8 @@ app.post('/messages', function(req, res) {
 							console.log('New User inserted with reference: ' + user.reference);
 						});
 					}
-				});		
-				
+				});
+								
 				var jg_uri = eventLink.split("/");
 		
 				// store donation details
