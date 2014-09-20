@@ -7,14 +7,17 @@ var justGivingUrl = "https://api.justgiving.com/" + apiKey + "/v1/";
 module.exports = {
 	
 	getlink: function(callback) {
+	
+    	var random = Math.floor((Math.random() * 1000) + 1);
+    	
 		var options = {
         	method: 'GET',
-        	url: justGivingUrl + "fundraising/search?status=active",
+        	url: justGivingUrl + "fundraising/search?status=active&pageSize=1&page=" + random, 
         	headers: {
         	    "Content-Type": "application/json"
         	}
     	};
-    	
+    	    	
 		request(options, function(error, response, body){
 		
 			var results = JSON.parse(body);
