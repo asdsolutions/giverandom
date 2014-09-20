@@ -97,30 +97,26 @@ app.post('/messages', function(req, res) {
 			full_name = first_name + " " + other_names;
 			
 			
-			
-			// store user details
-			var user = {
-				number : phone_number,
-				first_name : first_name,
-				other_names : other_names,
-				full_name : full_name,
-			};
-	
-			console.log(user);
+			var user, donation;
 		
-			// get a random charity - Stephen to do!!
-			
+		
+			// Get a Random Charity	
 			var eventLink = randomGiving.getlink(function(eventLink, eventName, eventId){
 		
-				var user, donation;
+				console.log('Event Link: ' + eventLink);
+				console.log('Event Name: ' + eventName);
+				console.log('Event ID: ' + eventId);
+				
+				console.log('user collection: ' + userCollection);
 				
 				// event has been returned
 				// see if the user exists
 				userCollection.find({mobileNumber: phone_number}).toArray(function(err, records){
-				
-					if(records && records.length > 0) {
+					console.log('Finding users with mobile number: ' + phone_number);
+					if(!err && records && records.length > 0) {
 						// exists - user me!
 						user = records[0];
+						console.log('User is found with reference: ' + user.reference);
 					} else {
 						// doesn't exist - create me
 						user = {
@@ -130,7 +126,7 @@ app.post('/messages', function(req, res) {
 						};
 						
 						userCollection.insert(user, {}, function() {
-							
+							console.log('New User inserted with reference: ' + user.reference);
 						});
 					}
 				});		
@@ -163,10 +159,6 @@ app.post('/messages', function(req, res) {
 					console.log(message.sid); 
 				});
 			});
-	
-	
-			
-			
 		}
 		else
 		{
@@ -206,7 +198,7 @@ app.get('/d/:ref', function(req, res) {
 	// find the donation
 	donationCollection.find({reference: donation_ref}).toArray(function(err, records){
 				
-		if(records && records.length > 0) {
+		if(!err && records && records.length > 0) {
 			// exists
 			donation = records[0];
 			
