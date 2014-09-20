@@ -159,8 +159,8 @@ app.post('/messages', function (req, res) {
 
                     donationCollection.insert(donation, {}, function () {
                             var splitName = user.name.split('/');
-                            var firstName = splitName[splitName.length - 1];
-
+                            var firstName = splitName[0];
+	console.log('For : ' + firstName);
                             // send something back
                             client.messages.create({
                                 to: user.number,
