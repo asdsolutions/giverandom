@@ -229,7 +229,7 @@ app.get('/d/:ref', function(req, res) {
 		}
 	});	
 
-}
+});
 
 
 function isNumber(n) {
