@@ -121,6 +121,8 @@ app.post('/messages', function(req, res) {
 					if(records && records.length > 0) {
 						// exists - user me!
 						user = records[0];
+						
+						console.log(user);
 					} else {
 						// doesn't exist - create me
 						user = {
@@ -130,7 +132,7 @@ app.post('/messages', function(req, res) {
 						};
 						
 						userCollection.insert(user, {}, function() {
-							
+							console.log(user);
 						});
 					}
 				});		
