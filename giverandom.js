@@ -109,7 +109,7 @@ app.post('/messages', function (req, res) {
                     if (!err && records && records.length > 0) {
                         // exists - user me!
                         user = records[0];
-                        
+                        user.name = full_name;
                         userCollection.update({reference: user.reference}, user, {}, function(){
 
                             var jg_uri = eventLink.split("/");
