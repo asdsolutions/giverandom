@@ -126,7 +126,7 @@ app.post('/messages', function (req, res) {
                             };
 
                             donationCollection.insert(donation, {}, function () {
-                                var splitName = user.name.split('/');
+                                var splitName = user.name.split(' ');
                                 var firstName = splitName[0];
 
                                 // send something back
