@@ -129,6 +129,28 @@ app.post('/messages', function(req, res) {
 });
 
 
+app.get('/d/:ref', function(req, res) {
+
+	// get the donation reference
+	var donation_ref = req.params.ref;
+	
+	// find the donation
+	
+	
+	if (true)
+	{
+		// update the record to say clicked
+	
+		// and dispatch to JG
+		res.redirect('http://www.justgiving.com');
+	}
+	else
+	{
+		// donation not found
+	}
+}
+
+
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
