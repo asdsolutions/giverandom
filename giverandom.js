@@ -12,6 +12,27 @@ var authToken = '8689348e4829c33fd126469c8d2fd488';
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
 
+// Mongo Database
+var crypto = require("crypto"),
+    mongoClient = require('mongodb').MongoClient,
+    mongodb_host = "127.0.0.1",
+    mongodb_port = "27017",
+    userCollection,
+    donationCollection;
+    
+var mongoConnection = "mongodb://";
+mongoConnection += mongodb_host + ":" + mongodb_port;
+mongoConnection += "/library";
+mongoClient.connect(mongoConnection, function(err, database) {
+	if(err) {
+		throw new Error("Can't connect.");
+	} else {
+		console.log("Connection to MongoDB server successful.");
+  		userCollection = database.collection('users');
+  		donationCollection = database.collection('donations');
+  	}
+});
+
 
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -74,17 +95,42 @@ app.post('/messages', function(req, res) {
 		
 			// get a random charity - Stephen to do!!
 			
-			var eventLink = randomGiving.getlink(function(eventLink, eventName){
+			var eventLink = randomGiving.getlink(function(eventLink, eventName, eventId){
+		
+				var user, donation;
+				
+				// event has been returned
+				// see if the user exists
+				userCollection.find({mobileNumber: phone_number}).toArray(function(err, records){
+				
+					if(records && records.length > 0) {
+						// exists - user me!
+						user = records[0];
+					} else {
+						// doesn't exist - create me
+						user = {
+							reference: crypto.randomBytes(20).toString('hex'),
+							name: full_name,
+							mobileNumber: phone_number			
+						};
+					}
+				});		
 		
 				// store donation details
 				var donation = {
-					reference : "",
-					charity : eventName,
+					reference : crypto.randomBytes(20).toString('hex'), // mongo id
+					event : eventName, //
 					amount : amount,
-					complete : false
+					complete : false,
+					user: user.reference,
+					shortLink: "",
+					event: eventId
 				};
-			
-			
+				
+				donationCollection.insert(donation, {}, function() {
+					
+				});
+				
 				// send something back
 				client.messages.create({  
 					to: user.number,

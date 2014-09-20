@@ -27,7 +27,7 @@ module.exports = {
 			for(var i = 0; i < results.SearchResults.length; i++) {
 				if(!returned) {
 					returned = true;
-					callback(results.SearchResults[i].PageUrl, results.SearchResults[i].PageName);				
+					callback(results.SearchResults[i].PageUrl, results.SearchResults[i].PageName, results.SearchResults[i].EventId);				
 				}				
 			}			
 		});
