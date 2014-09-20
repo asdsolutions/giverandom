@@ -1,15 +1,16 @@
 var express = require('express');
 var app = express();
 var randomGiving = require('./randomgiving');
+/*
 var util = require('util');
-var twitter = require('twitter');
+var twitter = require('twit-stream');
 var twit = new twitter({
     consumer_key: 'ejVBCt67xsPpaRyXZPtLe7dMF',
     consumer_secret: 'JuRQKefvAdbjgL0nSXQdBbFyzGpRnNOwQBZirqg3d67vRLSDfT',
     access_token_key: '592530629-LJeOPE4thE7dHxa4sFw4z50ehdkQz9ClYM2Q00Jx',
     access_token_secret: 'HWX07Oz92yy8DQbClmuLVpBMheFJLCiN64okF4u28QCGi'
 });
-
+*/
 app.set('port', (process.env.PORT || 5000))
 
 // Twilio Credentials 
@@ -253,14 +254,4 @@ function isNumber(n) {
 
 app.listen(app.get('port'), function () {
     console.log("Node app is running at localhost:" + app.get('port'))
-});
-
-twit.stream('filter', {track:'#randomgive'}, function(stream) {
-
-console.log('Twit Stream HO');
-    stream.on('data', function(data) {
-        console.log(util.inspect(data));
-    });
-    // Disconnect stream after five seconds
-    setTimeout(stream.destroy, 500000);
 });
