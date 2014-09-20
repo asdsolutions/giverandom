@@ -111,30 +111,30 @@ app.post('/messages', function (req, res) {
                         user = records[0];
                         var jg_uri = eventLink.split("/");
 
-                    // store donation details
-                    var donation = {
-                        reference: crypto.randomBytes(20).toString('hex'), // mongo id
-                        event: eventName, //
-                        amount: amount,
-                        status: "sent",
-                        user: user.reference,
-                        shortLink: jg_uri[jg_uri.length - 1],
-                        event: eventId
-                    };
+                        // store donation details
+                        var donation = {
+                            reference: crypto.randomBytes(20).toString('hex'), // mongo id
+                            event: eventName, //
+                            amount: amount,
+                            status: "sent",
+                            user: user.reference,
+                            shortLink: jg_uri[jg_uri.length - 1],
+                            event: eventId
+                        };
 
-                    donationCollection.insert(donation, {}, function () {
-                        var splitName = user.name.split('/');
-                        var firstName = splitName[splitName.length - 1];
+                        donationCollection.insert(donation, {}, function () {
+                            var splitName = user.name.split('/');
+                            var firstName = splitName[0];
 
-                        // send something back
-                        client.messages.create({
-                            to: user.number,
-                            from: "+441724410033",
-                            body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
-                        }, function (err, message) {
-                            console.log(message.sid);
+                            // send something back
+                            client.messages.create({
+                                to: user.mobileNumber,
+                                from: "+441724410033",
+                                body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                            }, function (err, message) {
+                                console.log(message.sid);
+                            });
                         });
-                    });
                     } else {
                         // doesn't exist - create me
                         user = {
@@ -144,35 +144,35 @@ app.post('/messages', function (req, res) {
                         };
 
                         userCollection.insert(user, {}, function () {
-                        var jg_uri = eventLink.split("/");
+                            var jg_uri = eventLink.split("/");
 
-                    // store donation details
-                    var donation = {
-                        reference: crypto.randomBytes(20).toString('hex'), // mongo id
-                        event: eventName, //
-                        amount: amount,
-                        status: "sent",
-                        user: user.reference,
-                        shortLink: jg_uri[jg_uri.length - 1],
-                        event: eventId
-                    };
+                            // store donation details
+                            var donation = {
+                                reference: crypto.randomBytes(20).toString('hex'), // mongo id
+                                event: eventName, //
+                                amount: amount,
+                                status: "sent",
+                                user: user.reference,
+                                shortLink: jg_uri[jg_uri.length - 1],
+                                event: eventId
+                            };
 
-                    donationCollection.insert(donation, {}, function () {
-                            var splitName = user.name.split('/');
-                            var firstName = splitName[0];
-	console.log('For : ' + firstName);
-                            // send something back
-                            client.messages.create({
-                                to: user.number,
-                                from: "+441724410033",
-                                body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
-                            }, function (err, message) {
-                                console.log(message.sid);
+                            donationCollection.insert(donation, {}, function () {
+                                var splitName = user.name.split('/');
+                                var firstName = splitName[0];
+                                console.log('For : ' + firstName);
+                                // send something back
+                                client.messages.create({
+                                    to: user.mobileNumber,
+                                    from: "+441724410033",
+                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                                }, function (err, message) {
+                                    console.log(message.sid);
+                                });
                             });
                         });
-                        });
                     }
-                });                
+                });
             });
         }
         else
@@ -245,5 +245,5 @@ app.listen(app.get('port'), function () {
 })
 
 function getOrCreateUser() {
-    
+
 }
