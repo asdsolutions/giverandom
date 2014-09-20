@@ -157,7 +157,7 @@ app.post('/messages', function(req, res) {
 				client.messages.create({  
 					to: user.number,
 					from: "+441724410033",    
-					body: "Hi " + user.first_name + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri . "d/" . donation.reference,
+					body: "Hi " + user.first_name + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
 				}, function(err, message) { 
 					console.log(message.sid); 
 				});
