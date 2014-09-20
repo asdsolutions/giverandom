@@ -248,6 +248,8 @@ app.listen(app.get('port'), function () {
     console.log("Node app is running at localhost:" + app.get('port'))
 })
 
-function getOrCreateUser() {
+var stream = twit.stream('statuses/filter', {'track': ['#MYHASHTAG']});
 
-}
+stream.on('tweet', function (tweet) {
+    console.log(tweet);
+})
