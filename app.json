@@ -1,0 +1,7 @@
+{
+  "name": "Giverandom",
+  "description": "Giverandom",
+  "repository": "https://github.com/asdsolutions/giverandom",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static"]
+}
