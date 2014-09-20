@@ -39,6 +39,7 @@ var crypto = require("crypto"),
 var mongoConnection = "mongodb://heroku:df4cdf67f988c5ae351bf131fb1da569@kahana.mongohq.com:10055/app29807507";
 mongoClient.connect(mongoConnection, function(err, database) {
 	if(err) {
+	console.log(err);
 		throw new Error("Can't connect.");
 	} else {
 		console.log("Connection to MongoDB server successful.");
