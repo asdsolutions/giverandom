@@ -165,12 +165,14 @@ app.post('/messages', function (req, res) {
                 });
 
 
+				var splitName = user.name.split('/');
+				var firstName = splitName[splitName.length - 1];
 
                 // send something back
                 client.messages.create({
                     to: user.number,
                     from: "+441724410033",
-                    body: "Hi " + user.first_name + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
                 }, function (err, message) {
                     console.log(message.sid);
                 });
