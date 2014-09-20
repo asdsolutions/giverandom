@@ -111,21 +111,28 @@ app.post('/messages', function (req, res) {
 
                 // event has been returned
                 // see if the user exists
-
+                console.log('Pre User collection find');
                 userCollection.find({mobileNumber: phone_number}, function (err, cursor) {
+                    console.log('user collection find callback');
                     if (!err) {
+                        console.log('there is not an error in user collection find');
                         var records = cursor.toArray(function (err, records) {
+                            console.log('records exist');
                             if (!err && records && records.length > 0) {
+                                console.log('No errors, rcords more than 0');
                                 // exists - user me!
                                 user = records[0];
                                 console.log('User is found with reference: ' + user.reference);
                             } else {
+                                console.log('User does not exist - create a new one');
                                 // doesn't exist - create me
                                 user = {
                                     reference: crypto.randomBytes(20).toString('hex'),
                                     name: full_name,
                                     mobileNumber: phone_number
                                 };
+
+                                console.log('user collection insert next');
 
                                 userCollection.insert(user, {}, function () {
                                     console.log('New User inserted with reference: ' + user.reference);
@@ -146,7 +153,7 @@ app.post('/messages', function (req, res) {
                         });
                     }
                 });
-
+                console.log('gone past user collection find');
                 var jg_uri = eventLink.split("/");
 
                 // store donation details
@@ -159,7 +166,7 @@ app.post('/messages', function (req, res) {
                     shortLink: jg_uri[jg_uri.length - 1],
                     event: eventId
                 };
-
+                console.log('dont we feel silly');
                 donationCollection.insert(donation, {}, function () {
 
                 });
