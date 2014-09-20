@@ -109,7 +109,7 @@ app.post('/messages', function (req, res) {
                     if (!err && records && records.length > 0) {
                         // exists - user me!
                         user = records[0];
-                        user.name = full_name;
+                        user.name = full_name.trim();
                         userCollection.update({reference: user.reference}, user, {}, function(){
 
                             var jg_uri = eventLink.split("/");
@@ -126,7 +126,7 @@ app.post('/messages', function (req, res) {
                             };
 
                             donationCollection.insert(donation, {}, function () {
-                                var splitName = user.name.split('/');
+                                var splitName = user.name.split(' ');
                                 var firstName = splitName[0];
 
                                 // send something back
@@ -143,7 +143,7 @@ app.post('/messages', function (req, res) {
                         // doesn't exist - create me
                         user = {
                             reference: crypto.randomBytes(20).toString('hex'),
-                            name: full_name,
+                            name: full_name.trim(),
                             mobileNumber: phone_number
                         };
 
