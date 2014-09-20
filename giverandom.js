@@ -45,7 +45,7 @@ mongoClient.connect(mongoConnection, function(err, database) {
 		console.log("Connection to MongoDB server successful.");
   		userCollection = database.collection('users');
   		donationCollection = database.collection('donations');
-  	}
+  	} 
 });
 
 
@@ -97,24 +97,6 @@ app.post('/messages', function(req, res) {
 			full_name = first_name + " " + other_names;
 			
 			
-<<<<<<< HEAD
-			
-			// store user details
-// 			var user = {
-// 				number : phone_number,
-// 				first_name : first_name,
-// 				other_names : other_names,
-// 				full_name : full_name,
-// 			};
-// 	
-// 			console.log(user);
-		var user, donation;
-			// get a random charity - Stephen to do!!
-			
-			var eventLink = randomGiving.getlink(function(eventLink, eventName, eventId){
-		
-				
-=======
 			var user, donation;
 		
 		
@@ -126,7 +108,6 @@ app.post('/messages', function(req, res) {
 				console.log('Event ID: ' + eventId);
 				
 				console.log('user collection: ' + userCollection);
->>>>>>> 1656a1e1d0334b341f68a4c7e13e2a5f39f663ca
 				
 				// event has been returned
 				// see if the user exists
@@ -135,12 +116,7 @@ app.post('/messages', function(req, res) {
 					if(!err && records && records.length > 0) {
 						// exists - user me!
 						user = records[0];
-<<<<<<< HEAD
-						
-						console.log(user);
-=======
 						console.log('User is found with reference: ' + user.reference);
->>>>>>> 1656a1e1d0334b341f68a4c7e13e2a5f39f663ca
 					} else {
 						// doesn't exist - create me
 						user = {
@@ -150,17 +126,10 @@ app.post('/messages', function(req, res) {
 						};
 						
 						userCollection.insert(user, {}, function() {
-<<<<<<< HEAD
-							console.log(user);
-=======
 							console.log('New User inserted with reference: ' + user.reference);
->>>>>>> 1656a1e1d0334b341f68a4c7e13e2a5f39f663ca
 						});
 					}
 				});		
-				
-				console.log(user);
-				
 				
 				var jg_uri = eventLink.split("/");
 		
