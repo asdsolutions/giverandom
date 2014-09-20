@@ -36,7 +36,7 @@ var crypto = require("crypto"),
     userCollection,
     donationCollection;
     
-var mongoConnection = "mongodb://heroku:df4cdf67f988c5ae351bf131fb1da569@kahana.mongohq.com:10055/app29807507";
+var mongoConnection = "mongodb://giverandom:giverandom@kahana.mongohq.com:10055/app29807507";
 mongoClient.connect(mongoConnection, function(err, database) {
 	if(err) {
 	console.log(err);
