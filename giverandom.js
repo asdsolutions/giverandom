@@ -99,14 +99,14 @@ app.post('/messages', function(req, res) {
 			
 			
 			// store user details
-			var user = {
-				number : phone_number,
-				first_name : first_name,
-				other_names : other_names,
-				full_name : full_name,
-			};
-	
-			console.log(user);
+// 			var user = {
+// 				number : phone_number,
+// 				first_name : first_name,
+// 				other_names : other_names,
+// 				full_name : full_name,
+// 			};
+// 	
+// 			console.log(user);
 		
 			// get a random charity - Stephen to do!!
 			
@@ -134,6 +134,9 @@ app.post('/messages', function(req, res) {
 						});
 					}
 				});		
+				
+				console.log(user);
+				
 				
 				var jg_uri = eventLink.split("/");
 		
