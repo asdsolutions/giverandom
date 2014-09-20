@@ -12,17 +12,31 @@ var authToken = '8689348e4829c33fd126469c8d2fd488';
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
 
+var base_uri = "http://lit-taiga-6522.herokuapp.com/";
+
+
+var mongo = require('mongodb');
+
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/mydb';
+
+mongo.Db.connect(mongoUri, function (err, db) {
+  db.collection('mydocs', function(er, collection) {
+    collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+    });
+  });
+});
+
+
+
 // Mongo Database
 var crypto = require("crypto"),
     mongoClient = require('mongodb').MongoClient,
-    mongodb_host = "127.0.0.1",
-    mongodb_port = "27017",
     userCollection,
     donationCollection;
     
-var mongoConnection = "mongodb://";
-mongoConnection += mongodb_host + ":" + mongodb_port;
-mongoConnection += "/library";
+var mongoConnection = "mongodb://heroku:df4cdf67f988c5ae351bf131fb1da569@kahana.mongohq.com:10055/app29807507";
 mongoClient.connect(mongoConnection, function(err, database) {
 	if(err) {
 		throw new Error("Can't connect.");
@@ -113,17 +127,23 @@ app.post('/messages', function(req, res) {
 							name: full_name,
 							mobileNumber: phone_number			
 						};
+						
+						userCollection.insert(user, {}, function() {
+							
+						});
 					}
 				});		
+				
+				var jg_uri = eventLink.split("/");
 		
 				// store donation details
 				var donation = {
 					reference : crypto.randomBytes(20).toString('hex'), // mongo id
 					event : eventName, //
 					amount : amount,
-					complete : false,
+					status : "sent",
 					user: user.reference,
-					shortLink: "",
+					shortLink: jg_uri[jg_uri.length - 1],
 					event: eventId
 				};
 				
@@ -131,11 +151,13 @@ app.post('/messages', function(req, res) {
 					
 				});
 				
+				
+				
 				// send something back
 				client.messages.create({  
 					to: user.number,
 					from: "+441724410033",    
-					body: "Hi " + user.first_name + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + eventLink,
+					body: "Hi " + user.first_name + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri . "d/" . donation.reference,
 				}, function(err, message) { 
 					console.log(message.sid); 
 				});
@@ -181,19 +203,32 @@ app.get('/d/:ref', function(req, res) {
 	var donation_ref = req.params.ref;
 	
 	// find the donation
+	donationCollection.find({reference: donation_ref}).toArray(function(err, records){
+				
+		if(records && records.length > 0) {
+			// exists
+			donation = records[0];
+			
+			
+			// update the record to say clicked
+			donation.status = "clicked";
+			
+			
+			donationCollection.update({reference: donation_ref}, donation, {}, function() {
+			    
+			});
+
 	
-	
-	if (true)
-	{
-		// update the record to say clicked
-	
-		// and dispatch to JG
-		res.redirect('http://www.justgiving.com');
-	}
-	else
-	{
-		// donation not found
-	}
+			// and dispatch to JG
+			res.redirect('http://www.justgiving.com/' + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + base_uri + 'done/' + donation.reference);
+			
+			
+		} else {
+			
+			// 404...we'll come to this
+		}
+	});	
+
 }
 
 
