@@ -103,44 +103,39 @@ app.post('/messages', function (req, res) {
             // Get a Random Charity	
             var eventLink = randomGiving.getlink(function (eventLink, eventName, eventId) {
 
-                console.log('Event Link: ' + eventLink);
-                console.log('Event Name: ' + eventName);
-                console.log('Event ID: ' + eventId);
-
-                console.log('user collection: ' + userCollection);
-
                 // event has been returned
                 // see if the user exists
-                console.log('Pre User collection find');
-                userCollection.find({mobileNumber: phone_number}, function (err, cursor) {
-                    console.log('user collection find callback');
-                    if (!err) {
-                        console.log('there is not an error in user collection find');
-                        var records = cursor.toArray(function (err, records) {
-                            console.log('records exist');
-                            if (!err && records && records.length > 0) {
-                                console.log('No errors, rcords more than 0');
-                                // exists - user me!
-                                user = records[0];
-                                console.log('User is found with reference: ' + user.reference);
-                            } else {
-                                console.log('User does not exist - create a new one');
-                                // doesn't exist - create me
-                                user = {
-                                    reference: crypto.randomBytes(20).toString('hex'),
-                                    name: full_name,
-                                    mobileNumber: phone_number
-                                };
+                userCollection.find({mobileNumber: phone_number}).toArray(function (err, records) {
+                    if (!err && records && records.length > 0) {
+                        // exists - user me!
+                        user = records[0];
+                        var jg_uri = eventLink.split("/");
 
-                                console.log('user collection insert next');
+                    // store donation details
+                    var donation = {
+                        reference: crypto.randomBytes(20).toString('hex'), // mongo id
+                        event: eventName, //
+                        amount: amount,
+                        status: "sent",
+                        user: user.reference,
+                        shortLink: jg_uri[jg_uri.length - 1],
+                        event: eventId
+                    };
 
-                                userCollection.insert(user, {}, function () {
-                                    console.log('New User inserted with reference: ' + user.reference);
-                                });
-                            }
+                    donationCollection.insert(donation, {}, function () {
+                        var splitName = user.name.split('/');
+                        var firstName = splitName[splitName.length - 1];
+
+                        // send something back
+                        client.messages.create({
+                            to: user.number,
+                            from: "+441724410033",
+                            body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                        }, function (err, message) {
+                            console.log(message.sid);
                         });
+                    });
                     } else {
-                        console.log('No Users - issue - Create one');
                         // doesn't exist - create me
                         user = {
                             reference: crypto.randomBytes(20).toString('hex'),
@@ -149,46 +144,39 @@ app.post('/messages', function (req, res) {
                         };
 
                         userCollection.insert(user, {}, function () {
-                            console.log('New User inserted with reference: ' + user.reference);
+                        var jg_uri = eventLink.split("/");
+
+                    // store donation details
+                    var donation = {
+                        reference: crypto.randomBytes(20).toString('hex'), // mongo id
+                        event: eventName, //
+                        amount: amount,
+                        status: "sent",
+                        user: user.reference,
+                        shortLink: jg_uri[jg_uri.length - 1],
+                        event: eventId
+                    };
+
+                    donationCollection.insert(donation, {}, function () {
+                            var splitName = user.name.split('/');
+                            var firstName = splitName[splitName.length - 1];
+
+                            // send something back
+                            client.messages.create({
+                                to: user.number,
+                                from: "+441724410033",
+                                body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                            }, function (err, message) {
+                                console.log(message.sid);
+                            });
+                        });
                         });
                     }
-                });
-                console.log('gone past user collection find');
-                var jg_uri = eventLink.split("/");
-
-                // store donation details
-                var donation = {
-                    reference: crypto.randomBytes(20).toString('hex'), // mongo id
-                    event: eventName, //
-                    amount: amount,
-                    status: "sent",
-                    user: user.reference,
-                    shortLink: jg_uri[jg_uri.length - 1],
-                    event: eventId
-                };
-                console.log('dont we feel silly');
-                donationCollection.insert(donation, {}, function () {
-
-                });
-
-
-				var splitName = user.name.split('/');
-				var firstName = splitName[splitName.length - 1];
-
-                // send something back
-                client.messages.create({
-                    to: user.number,
-                    from: "+441724410033",
-                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
-                }, function (err, message) {
-                    console.log(message.sid);
-                });
+                });                
             });
         }
         else
         {
-            console.log("No amount specified");
-
             // send something back
             client.messages.create({
                 to: phone_number,
@@ -201,8 +189,6 @@ app.post('/messages', function (req, res) {
     }
     else
     {
-        console.log("Invalid format");
-
         // send something back
         client.messages.create({
             to: phone_number,
@@ -257,3 +243,7 @@ function isNumber(n) {
 app.listen(app.get('port'), function () {
     console.log("Node app is running at localhost:" + app.get('port'))
 })
+
+function getOrCreateUser() {
+    
+}
