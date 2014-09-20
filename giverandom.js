@@ -107,12 +107,12 @@ app.post('/messages', function(req, res) {
 // 			};
 // 	
 // 			console.log(user);
-		
+		var user, donation;
 			// get a random charity - Stephen to do!!
 			
 			var eventLink = randomGiving.getlink(function(eventLink, eventName, eventId){
 		
-				var user, donation;
+				
 				
 				// event has been returned
 				// see if the user exists
