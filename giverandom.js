@@ -131,19 +131,25 @@ app.post('/messages', function(req, res) {
 									console.log('New User inserted with reference: ' + user.reference);
 								});
 							}
-						}
-					} else {
-					console.log('No Users - issue - Create one');
-						// doesn't exist - create me
-						user = {
-							reference: crypto.randomBytes(20).toString('hex'),
-							name: full_name,
-							mobileNumber: phone_number			
+						}  else {
+							console.log('No Users - issue - Create one');
+							// doesn't exist - create me
+							user = {
+								reference: crypto.randomBytes(20).toString('hex'),
+								name: full_name,
+								mobileNumber: phone_number			
 						};
 						
 						userCollection.insert(user, {}, function() {
 							console.log('New User inserted with reference: ' + user.reference);
 						});
+					} else {
+							console.log('No Users - issue - Create one');
+							// doesn't exist - create me
+							user = {
+								reference: crypto.randomBytes(20).toString('hex'),
+								name: full_name,
+								mobileNumber: phone_number	
 					}
 				});
 								
