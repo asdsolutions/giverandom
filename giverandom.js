@@ -11,7 +11,9 @@ var twit = new twitter({
     access_token_secret: 'uEZ4c1XfhBJM2ssa6pwjuD7Y3V4c2Ham7iVcAedyl58R0'
 });
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5000));
+app.set('views', './views');
+app.set('view engine', 'jade');
 
 // Twilio Credentials 
 var accountSid = 'ACd8782736eabc8ca85c913afc58091499';
@@ -328,6 +330,11 @@ stream.on('tweet', function (tweet) {
             }
         });
     });
+});
+
+
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!'});
 });
 
 
