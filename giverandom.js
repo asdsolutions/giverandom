@@ -34,6 +34,10 @@ var authToken = '8689348e4829c33fd126469c8d2fd488';
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken);
 
+// JUST GIVING URIS
+var justGivingUri = "http://v3-sandbox.justgiving.com";
+// var justGivingUri = "http://www.justgiving.com";
+
 var base_uri = "http://lit-taiga-6522.herokuapp.com/";
 
 var mongo = require('mongodb');
@@ -260,7 +264,7 @@ app.get('/d/:ref', function (req, res) {
             var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
 
             // and dispatch to JG
-            res.redirect('http://www.justgiving.com/' + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + exitUrl);
+            res.redirect(justGivingUri + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + exitUrl);
 
 
         } else {
@@ -289,11 +293,12 @@ app.get('/done', function (req, res) {
 
                 donationCollection.update({reference: donation_ref}, donation, {}, function () {
                     // DONE                    
-                    
+            		res.render('thanks', {page_link: justGivingUri + donation.shortLink});
                 });
             });
         } else { 
-        	//  not found - error?
+        	//  not found - error?        	
+            res.render('sorry', {page_link: justGivingUri});
         }
         
     });
