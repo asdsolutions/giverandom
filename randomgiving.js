@@ -3,7 +3,7 @@ var emitter = require('events').EventEmitter;
 var request = require('request');
 var apiKey = "fe77416d";
 //var justGivingUrl = "https://api.justgiving.com/" + apiKey + "/v1/";
-var justGivingUrl = "https://api-sandbox.justgiving.com" + apiKey + "/v1/";
+var justGivingUrl = "https://api-sandbox.justgiving.com/" + apiKey + "/v1/";
 
 module.exports = {
 	
