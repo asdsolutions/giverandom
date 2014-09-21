@@ -1,16 +1,16 @@
 var express = require('express');
 var app = express();
 var randomGiving = require('./randomgiving');
-/*
+
 var util = require('util');
-var twitter = require('twit-stream');
+var twitter = require('twitter');
 var twit = new twitter({
     consumer_key: 'ejVBCt67xsPpaRyXZPtLe7dMF',
     consumer_secret: 'JuRQKefvAdbjgL0nSXQdBbFyzGpRnNOwQBZirqg3d67vRLSDfT',
     access_token_key: '592530629-LJeOPE4thE7dHxa4sFw4z50ehdkQz9ClYM2Q00Jx',
     access_token_secret: 'HWX07Oz92yy8DQbClmuLVpBMheFJLCiN64okF4u28QCGi'
 });
-*/
+
 app.set('port', (process.env.PORT || 5000))
 
 // Twilio Credentials 
@@ -246,6 +246,17 @@ app.get('/d/:ref', function (req, res) {
     });
 
 });
+
+function startStreaming() {
+console.log("start stream function callled");
+    twit.stream('filter', {track: '#giverandom'},  function(stream) {
+        console.log('starting stream');
+        stream.on('data', write);
+        stream.on('end', reconnect)
+    });
+}
+
+startStreaming();
 
 
 function isNumber(n) {
