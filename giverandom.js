@@ -7,8 +7,8 @@ var twitter = require('twit');
 var twit = new twitter({
     consumer_key: 'hWvpGJcJBUfVep7AnP0pO1qrM',
     consumer_secret: 'K1DXIFdJJaWk44BgyI1MW6A62tLtnAlBILKsWz5SdirpfgK0Jn',
-    access_token: '2823045272-TiesgXI5fxktnvfFGzI6BpcaEeSo4czVFNtHwD7',
-    access_token_secret: '0BiMUmfZrRgqY8RCBfbLchLYBYHCTSgew2trGbXBVhnx6'
+    access_token: '2823045272-tObkn9GhqvCBSJBH6J6g5Pg1ur0EkeE9XUfeoib',
+    access_token_secret: 'uEZ4c1XfhBJM2ssa6pwjuD7Y3V4c2Ham7iVcAedyl58R0'
 });
 
 app.set('port', (process.env.PORT || 5000))
@@ -259,10 +259,76 @@ stream.on('tweet', function (tweet) {
   console.log(tweet)
   
   // we need to find / create the user.
-  
-  
-  
-})
+  // Get a Random Charity	
+  var user, donation;
+    var eventLink = randomGiving.getlink(function (eventLink, eventName, eventId) {
+
+        // event has been returned
+        // see if the user exists
+        userCollection.find({twitterHandle: tweet.user.screen_name}).toArray(function (err, records) {
+            if (!err && records && records.length > 0) {
+                // exists - user me!
+                user = records[0];
+                user.name = tweet.user.name;
+                userCollection.update({reference: user.reference}, user, {}, function(){
+
+                    var jg_uri = eventLink.split("/");
+
+                    // store donation details
+                    var donation = {
+                        reference: crypto.randomBytes(20).toString('hex'), // mongo id
+                        event: eventName, //
+                        amount: 5,
+                        status: "sent",
+                        user: user.reference,
+                        shortLink: jg_uri[jg_uri.length - 1],
+                        event: eventId
+                    };
+
+                    donationCollection.insert(donation, {}, function () {
+                        // tweet @ screen_name the above message
+                        var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + base_uri + "d/" + donation.reference;
+                        console.log(status);
+                    twit.post('statuses/update', { status: status }, function(err, data, response) {
+                        console.log(data)
+                        console.log(err);
+                      });
+
+                    });
+                });
+            } else {
+                // doesn't exist - create me
+                user = {
+                    reference: crypto.randomBytes(20).toString('hex'),
+                    name: tweet.user.name,
+                    twitterHandle: tweet.user.screen_name
+                };
+
+                userCollection.insert(user, {}, function () {
+                    var jg_uri = eventLink.split("/");
+
+                    // store donation details
+                    var donation = {
+                        reference: crypto.randomBytes(20).toString('hex'), // mongo id
+                        event: eventName, //
+                        amount: 5,
+                        status: "sent",
+                        user: user.reference,
+                        shortLink: jg_uri[jg_uri.length - 1],
+                        event: eventId
+                    };
+
+                    // tweet to the user
+                    var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + base_uri + "d/" + donation.reference;
+                    console.log(status);
+                    twit.post('statuses/update', { status: status }, function(err, data, response) {
+                        console.log(data)
+                      });
+                });
+            }
+        });
+    });
+});
 
 
 function isNumber(n) {
