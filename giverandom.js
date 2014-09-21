@@ -307,7 +307,10 @@ stream.on('tweet', function (tweet) {
                         var shortened = JSON.parse(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortened.data.url;
-                            
+                            if(status.length > 140) {
+                            	status = "Hi @" + tweet.user.screen_name + ' ' + shortened.data.url + ' - ' + eventName;
+                            	status = status.substr(0, 140);
+                            }
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
                             
                             });
@@ -343,7 +346,10 @@ stream.on('tweet', function (tweet) {
                         var shortened = JSON.parse(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortened.data.url;
-                            
+                            if(status.length > 140) {
+                            	status = "Hi @" + tweet.user.screen_name + ' ' + shortened.data.url + ' - ' + eventName;
+                            	status = status.substr(0, 140);
+                            }
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
                             
                             });
