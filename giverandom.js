@@ -288,10 +288,14 @@ app.get('/done', function (req, res) {
                 donation.amount = donationAmount;
 
                 donationCollection.update({reference: donation_ref}, donation, {}, function () {
-                    // DONE
+                    // DONE                    
+                    
                 });
             });
+        } else { 
+        	//  not found - error?
         }
+        
     });
 });
 
