@@ -261,7 +261,7 @@ app.get('/d/:ref', function (req, res) {
             var exitUrl = encodeURIComponent(base_uri + 'done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
 
             // and dispatch to JG
-            res.redirect(justGivingUri + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + exitUrl);
+            res.redirect(justGivingUri + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&reference=randomgiving&exitUrl=' + exitUrl);
 
 
         } else {
