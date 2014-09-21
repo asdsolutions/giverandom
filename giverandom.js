@@ -295,6 +295,7 @@ stream.on('tweet', function (tweet) {
                     donationCollection.insert(donation, {}, function () {
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+                        console.log(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
                             console.log(status);
@@ -332,6 +333,7 @@ stream.on('tweet', function (tweet) {
 
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+                        console.log(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
                             console.log(status);
