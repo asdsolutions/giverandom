@@ -297,7 +297,7 @@ stream.on('tweet', function (tweet) {
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
                         console.log(results);
                             // tweet @ screen_name the above message
-                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + results.data.url;
                             console.log(status);
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
                                 console.log(data)
@@ -335,7 +335,7 @@ stream.on('tweet', function (tweet) {
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
                         console.log(results);
                             // tweet @ screen_name the above message
-                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + results.data.url;
                             console.log(status);
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
                                 console.log(data)
