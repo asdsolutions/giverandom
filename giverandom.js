@@ -11,9 +11,7 @@ var twit = new twitter({
     access_token_secret: 'uEZ4c1XfhBJM2ssa6pwjuD7Y3V4c2Ham7iVcAedyl58R0'
 });
 
-app.set('port', (process.env.PORT || 5000));
-app.set('views', './views');
-app.set('view engine', 'jade');
+app.set('port', (process.env.PORT || 5000))
 
 // Twilio Credentials 
 var accountSid = 'ACd8782736eabc8ca85c913afc58091499';
@@ -249,11 +247,6 @@ app.get('/d/:ref', function (req, res) {
 
 });
 
-app.get('/', function (req, res) {
-	res.render('index', { title: 'Hey', message: 'Hello there dude!'});
-});
-
-
 //
 // filter the public stream by english tweets containing `#randomgive`
 //
@@ -266,7 +259,6 @@ stream.on('tweet', function (tweet) {
   console.log(tweet)
   
   // we need to find / create the user.
-<<<<<<< HEAD
   // Get a Random Charity	
   var user, donation;
     var eventLink = randomGiving.getlink(function (eventLink, eventName, eventId) {
@@ -275,7 +267,7 @@ stream.on('tweet', function (tweet) {
         // see if the user exists
         userCollection.find({twitterHandle: tweet.user.screen_name}).toArray(function (err, records) {
             if (!err && records && records.length > 0) {
-                // exists - user me!
+                // exists - user me!	
                 user = records[0];
                 user.name = tweet.user.name;
                 userCollection.update({reference: user.reference}, user, {}, function(){
@@ -330,17 +322,13 @@ stream.on('tweet', function (tweet) {
                     var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + base_uri + "d/" + donation.reference;
                     console.log(status);
                     twit.post('statuses/update', { status: status }, function(err, data, response) {
-                        console.log(data)
+                        console.log(data);
                       });
                 });
             }
         });
     });
 });
-=======
- 
-})
->>>>>>> 66582e16f220b05329007c0cd09760e4f09f23d7
 
 
 function isNumber(n) {
