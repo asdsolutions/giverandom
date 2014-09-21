@@ -1,0 +1,9 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  background: transparent url('http://placekitten.com/g/1300/303') top left no-repeat;
+  padding: 40px 15px;
+  text-align: center;
+}
+

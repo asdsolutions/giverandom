@@ -18,6 +18,15 @@ Bitly.setAccessToken('2c0ada24bc4021921381978f3e8db5746ac9bf7c');
 
 app.set('port', (process.env.PORT || 5000));
 
+var expressHbs = require('express-handlebars');
+
+app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
+app.set('view engine', 'hbs');
+
+app.configure(function(){
+  app.use('/assets', express.static(__dirname + '/assets'));
+});
+
 // Twilio Credentials 
 var accountSid = 'ACd8782736eabc8ca85c913afc58091499';
 var authToken = '8689348e4829c33fd126469c8d2fd488';
@@ -385,7 +394,7 @@ stream.on('tweet', function (tweet) {
 
 
 app.get('/', function (req, res) {
-    res.render('index', {title: 'Hey', message: 'Hello there!'});
+    res.render('index', {num_donations: '123'});
 });
 
 
