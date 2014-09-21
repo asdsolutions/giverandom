@@ -333,7 +333,7 @@ stream.on('tweet', function (tweet) {
                     // store donation details
                     var donation = {
                         reference: crypto.randomBytes(20).toString('hex'), // mongo id
-                        event: eventName, //
+                        eventName: eventName, //
                         amount: 5,
                         status: "sent",
                         user: user.reference,
@@ -371,7 +371,7 @@ stream.on('tweet', function (tweet) {
                     // store donation details
                     var donation = {
                         reference: crypto.randomBytes(20).toString('hex'), // mongo id
-                        event: eventName, //
+                        eventName: eventName, //
                         amount: 5,
                         status: "sent",
                         user: user.reference,

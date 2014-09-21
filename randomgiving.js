@@ -35,7 +35,7 @@ module.exports = {
 	getdonation: function(justGivingDonationId, callback) {
 		var options = {
 			method: 'GET',
-			url: justGivingUrl + "donation/" + justGivingDonationId + '/status',
+			url: justGivingUrl + "donation/" + justGivingDonatedId + '/status',
 			headers: {
 				"Content-Type": "application/json"
 			}
