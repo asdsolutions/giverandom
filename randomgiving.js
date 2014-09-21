@@ -10,7 +10,7 @@ module.exports = {
 	getlink: function(callback) {
 	
     	var random = Math.floor((Math.random() * 1000) + 1);
-    	
+    	random = 1;
 		var options = {
         	method: 'GET',
         	url: justGivingUrl + "fundraising/search?status=active&pageSize=1&page=" + random, 
