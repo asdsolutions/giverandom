@@ -11,7 +11,9 @@ var twit = new twitter({
     access_token_secret: 'uEZ4c1XfhBJM2ssa6pwjuD7Y3V4c2Ham7iVcAedyl58R0'
 });
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5000));
+app.set('views', './views');
+app.set('view engine', 'jade');
 
 // Twilio Credentials 
 var accountSid = 'ACd8782736eabc8ca85c913afc58091499';
@@ -247,6 +249,11 @@ app.get('/d/:ref', function (req, res) {
 
 });
 
+app.get('/', function (req, res) {
+	res.render('index', { title: 'Hey', message: 'Hello there dude!'});
+});
+
+
 //
 // filter the public stream by english tweets containing `#randomgive`
 //
@@ -259,6 +266,7 @@ stream.on('tweet', function (tweet) {
   console.log(tweet)
   
   // we need to find / create the user.
+<<<<<<< HEAD
   // Get a Random Charity	
   var user, donation;
     var eventLink = randomGiving.getlink(function (eventLink, eventName, eventId) {
@@ -329,6 +337,10 @@ stream.on('tweet', function (tweet) {
         });
     });
 });
+=======
+ 
+})
+>>>>>>> 66582e16f220b05329007c0cd09760e4f09f23d7
 
 
 function isNumber(n) {
