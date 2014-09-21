@@ -20,11 +20,11 @@ app.set('port', (process.env.PORT || 5000));
 
 var expressHbs = require('express-handlebars');
 
-app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
+app.engine('hbs', expressHbs({extname: 'hbs', defaultLayout: 'main.hbs'}));
 app.set('view engine', 'hbs');
 
-app.configure(function(){
-  app.use('/assets', express.static(__dirname + '/assets'));
+app.configure(function () {
+    app.use('/assets', express.static(__dirname + '/assets'));
 });
 
 // Twilio Credentials 
@@ -147,11 +147,11 @@ app.post('/messages', function (req, res) {
                                 var splitName = user.name.split(' ');
                                 var firstName = splitName[0];
                                 var shortUrl = base_uri + "d/" + donation.reference;
-                                
-                                Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+
+                                Bitly.shorten({longUrl: shortUrl}, function (err, results) {
                                     var shortened = JSON.parse(results);
 
-                                       // send something back
+                                    // send something back
                                     client.messages.create({
                                         to: user.mobileNumber,
                                         from: "+441724410033",
@@ -189,11 +189,11 @@ app.post('/messages', function (req, res) {
                                 var firstName = splitName[0];
 
                                 var shortUrl = base_uri + "d/" + donation.reference;
-                                
-                                Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+
+                                Bitly.shorten({longUrl: shortUrl}, function (err, results) {
                                     var shortened = JSON.parse(results);
 
-                                       // send something back
+                                    // send something back
                                     client.messages.create({
                                         to: user.mobileNumber,
                                         from: "+441724410033",
@@ -203,7 +203,7 @@ app.post('/messages', function (req, res) {
                                     });
                                 });
 
-                                
+
                             });
                         });
                     }
@@ -257,8 +257,8 @@ app.get('/d/:ref', function (req, res) {
 
             });
 
-			var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
-            
+            var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
+
             // and dispatch to JG
             res.redirect('http://www.justgiving.com/' + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + exitUrl);
 
@@ -274,25 +274,25 @@ app.get('/d/:ref', function (req, res) {
 
 app.get('/done', function (req, res) {
 
-	var donation_ref = req.query.donation_ref;
-	var justgiving_donation_id = req.query.donation_id;
-	
-	var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
-            
-	donationCollection.find({reference: donation_ref}).toArray(function (err, records) {
-		if(!err && records && records.length > 0) {
-			var donation = records[0];
-			
-			var donationData = randomGiving.getdonation(justgiving_donation_id, function(donationAmount, donationStatus){
-				donation.status = donationStatus;
-				donation.amount = donationAmount;
-				
-				donationCollection.update({reference: donation_ref}, donation, {}, function(){
-					// DONE
-				});
-			});
-		}
-	});
+    var donation_ref = req.query.donation_ref;
+    var justgiving_donation_id = req.query.donation_id;
+
+    var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
+
+    donationCollection.find({reference: donation_ref}).toArray(function (err, records) {
+        if (!err && records && records.length > 0) {
+            var donation = records[0];
+
+            var donationData = randomGiving.getdonation(justgiving_donation_id, function (donationAmount, donationStatus) {
+                donation.status = donationStatus;
+                donation.amount = donationAmount;
+
+                donationCollection.update({reference: donation_ref}, donation, {}, function () {
+                    // DONE
+                });
+            });
+        }
+    });
 });
 
 //
@@ -334,16 +334,16 @@ stream.on('tweet', function (tweet) {
 
                     donationCollection.insert(donation, {}, function () {
                         var shortUrl = base_uri + "d/" + donation.reference;
-                        Bitly.shorten({longUrl:shortUrl}, function(err, results) {
-                        var shortened = JSON.parse(results);
+                        Bitly.shorten({longUrl: shortUrl}, function (err, results) {
+                            var shortened = JSON.parse(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortened.data.url;
-                            if(status.length > 140) {
-                            	status = "Hi @" + tweet.user.screen_name + ' ' + shortened.data.url + ' - ' + eventName;
-                            	status = status.substr(0, 140);
+                            if (status.length > 140) {
+                                status = "Hi @" + tweet.user.screen_name + ' ' + shortened.data.url + ' - ' + eventName;
+                                status = status.substr(0, 140);
                             }
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
-                            
+
                             });
                         });
                     });
@@ -373,16 +373,16 @@ stream.on('tweet', function (tweet) {
                     donationCollection.insert(donation, {}, function () {
 
                         var shortUrl = base_uri + "d/" + donation.reference;
-                        Bitly.shorten({longUrl:shortUrl}, function(err, results) {
-                        var shortened = JSON.parse(results);
+                        Bitly.shorten({longUrl: shortUrl}, function (err, results) {
+                            var shortened = JSON.parse(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortened.data.url;
-                            if(status.length > 140) {
-                            	status = "Hi @" + tweet.user.screen_name + ' ' + shortened.data.url + ' - ' + eventName;
-                            	status = status.substr(0, 140);
+                            if (status.length > 140) {
+                                status = "Hi @" + tweet.user.screen_name + ' ' + shortened.data.url + ' - ' + eventName;
+                                status = status.substr(0, 140);
                             }
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
-                            
+
                             });
                         });
                     });
@@ -395,6 +395,15 @@ stream.on('tweet', function (tweet) {
 
 app.get('/', function (req, res) {
     res.render('index', {num_donations: '123'});
+
+    donationCollection.find().toArray(function (err, records) {
+        if (!err && records && records.length > 0) {
+            res.render('index', {num_donations: records.length});
+        } else {
+            res.render('index', {num_donations: '4323'});
+        }
+    });
+
 });
 
 
