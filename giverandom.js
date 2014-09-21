@@ -294,12 +294,9 @@ stream.on('tweet', function (tweet) {
                     donationCollection.insert(donation, {}, function () {
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
-                        console.log(results);
-                        console.log("Status code: " + results.status_code);
-                        console.log("Data: " + results.data);
-                        console.log("URL: " + results.data.url);
+                        var shortened = JSON.parse(results);
                             // tweet @ screen_name the above message
-                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortened.data.url;
                             
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
                             
@@ -334,12 +331,9 @@ stream.on('tweet', function (tweet) {
 
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
-                        console.log(results);
-                        console.log("Status code: " + results.status_code);
-                        console.log("Data: " + results.data);
-                        console.log("URL: " + results.data.url);
+                        var shortened = JSON.parse(results);
                             // tweet @ screen_name the above message
-                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortened.data.url;
                             
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
                             
