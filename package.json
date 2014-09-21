@@ -16,6 +16,7 @@
     "twit": "1.1.18",
     "util": "0.10.3",
     "node-bitlyapi": "0.4.0"
+    "express-handlebars": "*"
   },
   "engines": {
     "node": "0.10.x"
