@@ -3,12 +3,12 @@ var app = express();
 var randomGiving = require('./randomgiving');
 
 var util = require('util');
-var twitter = require('twitter');
+var twitter = require('twit');
 var twit = new twitter({
-    consumer_key: 'ejVBCt67xsPpaRyXZPtLe7dMF',
-    consumer_secret: 'JuRQKefvAdbjgL0nSXQdBbFyzGpRnNOwQBZirqg3d67vRLSDfT',
-    access_token_key: '592530629-LJeOPE4thE7dHxa4sFw4z50ehdkQz9ClYM2Q00Jx',
-    access_token_secret: 'HWX07Oz92yy8DQbClmuLVpBMheFJLCiN64okF4u28QCGi'
+    consumer_key: 'hWvpGJcJBUfVep7AnP0pO1qrM',
+    consumer_secret: 'K1DXIFdJJaWk44BgyI1MW6A62tLtnAlBILKsWz5SdirpfgK0Jn',
+    access_token: '2823045272-TiesgXI5fxktnvfFGzI6BpcaEeSo4czVFNtHwD7',
+    access_token_secret: '0BiMUmfZrRgqY8RCBfbLchLYBYHCTSgew2trGbXBVhnx6'
 });
 
 app.set('port', (process.env.PORT || 5000))
@@ -247,16 +247,22 @@ app.get('/d/:ref', function (req, res) {
 
 });
 
-function startStreaming() {
-console.log("start stream function callled");
-    twit.stream('filter', {track: '#giverandom'},  function(stream) {
-        console.log('starting stream');
-        stream.on('data', write);
-        stream.on('end', reconnect)
-    });
-}
+//
+// filter the public stream by english tweets containing `#randomgive`
+//
+var stream = twit.stream('statuses/filter', { track: '#randomgive'})
 
-startStreaming();
+stream.on('tweet', function (tweet) {
+	// we have a tweet - lets reply with a random one!!!!
+	console.log("Name: " + tweet.user.name);
+	console.log("Handle: " + tweet.user.screen_name);
+  console.log(tweet)
+  
+  // we need to find / create the user.
+  
+  
+  
+})
 
 
 function isNumber(n) {
