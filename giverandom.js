@@ -394,7 +394,6 @@ stream.on('tweet', function (tweet) {
 
 
 app.get('/', function (req, res) {
-    res.render('index', {num_donations: '123'});
 
     donationCollection.find().toArray(function (err, records) {
         if (!err && records && records.length > 0) {
