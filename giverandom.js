@@ -155,7 +155,7 @@ app.post('/messages', function (req, res) {
                                     client.messages.create({
                                         to: user.mobileNumber,
                                         from: "+441724410033",
-                                        body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + shortened.data.url,
+                                        body: "Hi " + firstName + ", here's a link to donate £" + donation.amount.toFixed(2) + " to " + eventName + ": " + shortened.data.url,
                                     }, function (err, message) {
                                         console.log(message.sid);
                                     });
@@ -197,7 +197,7 @@ app.post('/messages', function (req, res) {
                                     client.messages.create({
                                         to: user.mobileNumber,
                                         from: "+441724410033",
-                                        body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + shortened.data.url,
+                                        body: "Hi " + firstName + ", here's a link to donate £" + donation.amount.toFixed(2) + " to " + eventName + ": " + shortened.data.url,
                                     }, function (err, message) {
                                         console.log(message.sid);
                                     });
