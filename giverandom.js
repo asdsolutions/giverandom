@@ -261,7 +261,7 @@ app.get('/d/:ref', function (req, res) {
 
             });
 
-            var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
+            var exitUrl = encodeURIComponent(base_uri + 'done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
 
             // and dispatch to JG
             res.redirect(justGivingUri + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + exitUrl);
@@ -281,7 +281,7 @@ app.get('/done', function (req, res) {
     var donation_ref = req.query.donation_ref;
     var justgiving_donation_id = req.query.donation_id;
 
-    var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
+    //var exitUrl = encodeURIComponent(base_uri + 'done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
 
     donationCollection.find({reference: donation_ref}).toArray(function (err, records) {
         if (!err && records && records.length > 0) {
