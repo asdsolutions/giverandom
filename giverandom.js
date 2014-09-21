@@ -263,7 +263,6 @@ stream.on('tweet', function (tweet) {
     // we have a tweet - lets reply with a random one!!!!
     console.log("Name: " + tweet.user.name);
     console.log("Handle: " + tweet.user.screen_name);
-    console.log(tweet)
 
     // we need to find / create the user.
     // Get a Random Charity	
@@ -295,13 +294,12 @@ stream.on('tweet', function (tweet) {
                     donationCollection.insert(donation, {}, function () {
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
-                        console.log(results.data);
+                        console.log(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
-                            console.log(status);
+                            
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
-                                console.log(data)
-                                console.log(err);
+                            
                             });
                         });
                     });
@@ -333,13 +331,12 @@ stream.on('tweet', function (tweet) {
 
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
-                        console.log(results.data);
+                        console.log(results);
                             // tweet @ screen_name the above message
                             var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
-                            console.log(status);
+                            
                             twit.post('statuses/update', {status: status}, function (err, data, response) {
-                                console.log(data)
-                                console.log(err);
+                            
                             });
                         });
                     });
