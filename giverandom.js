@@ -9,6 +9,12 @@ var twit = new twitter({
     access_token: '2823045272-tObkn9GhqvCBSJBH6J6g5Pg1ur0EkeE9XUfeoib',
     access_token_secret: 'uEZ4c1XfhBJM2ssa6pwjuD7Y3V4c2Ham7iVcAedyl58R0'
 });
+var BitlyAPI = require('node-bitlyapi');
+var Bitly = new BitlyAPI({
+    client_id: '887b6aafcb0535792868e3bd50c7af08bf107c22',
+    client_secret: 'ff64bf59a90b43355635b8a9519b2e34e5631c63'
+});
+Bitly.setAccessToken('2c0ada24bc4021921381978f3e8db5746ac9bf7c');
 
 app.set('port', (process.env.PORT || 5000));
 app.set('views', './views');
@@ -287,17 +293,16 @@ stream.on('tweet', function (tweet) {
                     };
 
                     donationCollection.insert(donation, {}, function () {
-
-
                         var shortUrl = base_uri + "d/" + donation.reference;
-                        // tweet @ screen_name the above message
-                        var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
-                        console.log(status);
-                        twit.post('statuses/update', {status: status}, function (err, data, response) {
-                            console.log(data)
-                            console.log(err);
+                        Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+                            // tweet @ screen_name the above message
+                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                            console.log(status);
+                            twit.post('statuses/update', {status: status}, function (err, data, response) {
+                                console.log(data)
+                                console.log(err);
+                            });
                         });
-
                     });
                 });
             } else {
@@ -326,12 +331,14 @@ stream.on('tweet', function (tweet) {
 
 
                         var shortUrl = base_uri + "d/" + donation.reference;
-                        // tweet @ screen_name the above message
-                        var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
-                        console.log(status);
-                        twit.post('statuses/update', {status: status}, function (err, data, response) {
-                            console.log(data)
-                            console.log(err);
+                        Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+                            // tweet @ screen_name the above message
+                            var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                            console.log(status);
+                            twit.post('statuses/update', {status: status}, function (err, data, response) {
+                                console.log(data)
+                                console.log(err);
+                            });
                         });
                     });
                 });
