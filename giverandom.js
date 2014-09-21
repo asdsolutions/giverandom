@@ -141,14 +141,18 @@ app.post('/messages', function (req, res) {
                                 var splitName = user.name.split(' ');
                                 var firstName = splitName[0];
                                 var shortUrl = base_uri + "d/" + donation.reference;
+                                
+                                Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+                                    var shortened = JSON.parse(results);
 
-                                // send something back
-                                client.messages.create({
-                                    to: user.mobileNumber,
-                                    from: "+441724410033",
-                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + shortUrl,
-                                }, function (err, message) {
-                                    console.log(message.sid);
+                                       // send something back
+                                    client.messages.create({
+                                        to: user.mobileNumber,
+                                        from: "+441724410033",
+                                        body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + results.data.url,
+                                    }, function (err, message) {
+                                        console.log(message.sid);
+                                    });
                                 });
                             });
                         });
@@ -179,15 +183,21 @@ app.post('/messages', function (req, res) {
                                 var firstName = splitName[0];
 
                                 var shortUrl = base_uri + "d/" + donation.reference;
+                                
+                                Bitly.shorten({longUrl:shortUrl}, function(err, results) {
+                                    var shortened = JSON.parse(results);
 
-                                // send something back
-                                client.messages.create({
-                                    to: user.mobileNumber,
-                                    from: "+441724410033",
-                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + shortUrl,
-                                }, function (err, message) {
-                                    console.log(message.sid);
+                                       // send something back
+                                    client.messages.create({
+                                        to: user.mobileNumber,
+                                        from: "+441724410033",
+                                        body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + results.data.url,
+                                    }, function (err, message) {
+                                        console.log(message.sid);
+                                    });
                                 });
+
+                                
                             });
                         });
                     }
@@ -327,7 +337,6 @@ stream.on('tweet', function (tweet) {
                     };
 
                     donationCollection.insert(donation, {}, function () {
-
 
                         var shortUrl = base_uri + "d/" + donation.reference;
                         Bitly.shorten({longUrl:shortUrl}, function(err, results) {
