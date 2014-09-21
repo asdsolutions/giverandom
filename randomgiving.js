@@ -21,7 +21,6 @@ module.exports = {
 		request(options, function(error, response, body){
 		
 			var results = JSON.parse(body);
-			console.log(results.SearchResults.length);
 			var returned = false;
 			
 			for(var i = 0; i < results.SearchResults.length; i++) {
@@ -31,5 +30,22 @@ module.exports = {
 				}				
 			}			
 		});
-	}	
+	},
+	getdonation: function(justGivingDonationId, callback) {
+		var options = {
+			method: 'GET',
+			url: justGivingUrl + "donation/" + justGivingDonatedId + '/status',
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+		
+		request(options, function(error, response, body){
+			var results = JSON.parse(body);
+			console.log(results);
+			console.log(response);
+						
+			callback(results.amount, results.status);			
+		});
+	}
 };

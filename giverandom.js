@@ -17,8 +17,6 @@ var Bitly = new BitlyAPI({
 Bitly.setAccessToken('2c0ada24bc4021921381978f3e8db5746ac9bf7c');
 
 app.set('port', (process.env.PORT || 5000));
-app.set('views', './views');
-app.set('view engine', 'jade');
 
 // Twilio Credentials 
 var accountSid = 'ACd8782736eabc8ca85c913afc58091499';
@@ -28,7 +26,6 @@ var authToken = '8689348e4829c33fd126469c8d2fd488';
 var client = require('twilio')(accountSid, authToken);
 
 var base_uri = "http://lit-taiga-6522.herokuapp.com/";
-
 
 var mongo = require('mongodb');
 
@@ -251,9 +248,10 @@ app.get('/d/:ref', function (req, res) {
 
             });
 
-
+			var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
+            
             // and dispatch to JG
-            res.redirect('http://www.justgiving.com/' + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + base_uri + 'done/' + donation.reference);
+            res.redirect('http://www.justgiving.com/' + donation.shortLink + '/4w350m3/donate/?amount=' + donation.amount + '&currency=GBP&exitUrl=' + exitUrl);
 
 
         } else {
@@ -264,10 +262,34 @@ app.get('/d/:ref', function (req, res) {
 
 });
 
+
+app.get('/done', function (req, res) {
+
+	var donation_ref = req.query.donation_ref;
+	var justgiving_donation_id = req.query.donation_id;
+	
+	var exitUrl = encodeURIComponent(base_uri + '/done?donation_ref=' + donation_ref + '&donation_id=JUSTGIVING-DONATION-ID');
+            
+	donationCollection.find({reference: donation_ref}).toArray(function (err, records) {
+		if(!err && records && records.length > 0) {
+			var donation = records[0];
+			
+			var donationData = randomGiving.getdonation(justgiving_donation_id, function(donationAmount, donationStatus){
+				donation.status = donationStatus;
+				donation.amount = donationAmount;
+				
+				donationCollection.update({reference: donation_ref}, donation, {}, function(){
+					// DONE
+				});
+			});
+		}
+	});
+});
+
 //
 // filter the public stream by english tweets containing `#randomgive`
 //
-var stream = twit.stream('statuses/filter', {track: '#randomgive'})
+var stream = twit.stream('statuses/filter', {track: '#giverandom'})
 
 stream.on('tweet', function (tweet) {
     // we have a tweet - lets reply with a random one!!!!
