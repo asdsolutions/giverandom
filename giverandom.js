@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var randomGiving = require('./randomgiving');
-
 var util = require('util');
 var twitter = require('twit');
 var twit = new twitter({
@@ -53,8 +52,6 @@ mongoClient.connect(mongoConnection, function (err, database) {
         console.log("Connection to MongoDB server successful.");
         userCollection = database.collection('users');
         donationCollection = database.collection('donations');
-        
-        
     }
 });
 
@@ -71,7 +68,6 @@ app.post('/messages', function (req, res) {
     var s_id = req.body.MessageSid,
             message_body = req.body.Body,
             phone_number = req.body.From;
-
 
     // parse message
     var str_array = message_body.split(" ");
@@ -120,7 +116,7 @@ app.post('/messages', function (req, res) {
                         // exists - user me!
                         user = records[0];
                         user.name = full_name.trim();
-                        userCollection.update({reference: user.reference}, user, {}, function(){
+                        userCollection.update({reference: user.reference}, user, {}, function () {
 
                             var jg_uri = eventLink.split("/");
 
@@ -138,12 +134,13 @@ app.post('/messages', function (req, res) {
                             donationCollection.insert(donation, {}, function () {
                                 var splitName = user.name.split(' ');
                                 var firstName = splitName[0];
+                                var shortUrl = base_uri + "d/" + donation.reference;
 
                                 // send something back
                                 client.messages.create({
                                     to: user.mobileNumber,
                                     from: "+441724410033",
-                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + shortUrl,
                                 }, function (err, message) {
                                     console.log(message.sid);
                                 });
@@ -174,12 +171,14 @@ app.post('/messages', function (req, res) {
                             donationCollection.insert(donation, {}, function () {
                                 var splitName = user.name.split('/');
                                 var firstName = splitName[0];
-                                console.log('For : ' + firstName);
+
+                                var shortUrl = base_uri + "d/" + donation.reference;
+
                                 // send something back
                                 client.messages.create({
                                     to: user.mobileNumber,
                                     from: "+441724410033",
-                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + base_uri + "d/" + donation.reference,
+                                    body: "Hi " + firstName + ", here's a link to donate £" + donation.amount + " to " + eventName + ": " + shortUrl,
                                 }, function (err, message) {
                                     console.log(message.sid);
                                 });
@@ -252,17 +251,17 @@ app.get('/d/:ref', function (req, res) {
 //
 // filter the public stream by english tweets containing `#randomgive`
 //
-var stream = twit.stream('statuses/filter', { track: '#randomgive'})
+var stream = twit.stream('statuses/filter', {track: '#randomgive'})
 
 stream.on('tweet', function (tweet) {
-	// we have a tweet - lets reply with a random one!!!!
-	console.log("Name: " + tweet.user.name);
-	console.log("Handle: " + tweet.user.screen_name);
-  console.log(tweet)
-  
-  // we need to find / create the user.
-  // Get a Random Charity	
-  var user, donation;
+    // we have a tweet - lets reply with a random one!!!!
+    console.log("Name: " + tweet.user.name);
+    console.log("Handle: " + tweet.user.screen_name);
+    console.log(tweet)
+
+    // we need to find / create the user.
+    // Get a Random Charity	
+    var user, donation;
     var eventLink = randomGiving.getlink(function (eventLink, eventName, eventId) {
 
         // event has been returned
@@ -272,7 +271,7 @@ stream.on('tweet', function (tweet) {
                 // exists - user me!	
                 user = records[0];
                 user.name = tweet.user.name;
-                userCollection.update({reference: user.reference}, user, {}, function(){
+                userCollection.update({reference: user.reference}, user, {}, function () {
 
                     var jg_uri = eventLink.split("/");
 
@@ -288,13 +287,16 @@ stream.on('tweet', function (tweet) {
                     };
 
                     donationCollection.insert(donation, {}, function () {
+
+
+                        var shortUrl = base_uri + "d/" + donation.reference;
                         // tweet @ screen_name the above message
-                        var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + base_uri + "d/" + donation.reference;
+                        var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
                         console.log(status);
-                    twit.post('statuses/update', { status: status }, function(err, data, response) {
-                        console.log(data)
-                        console.log(err);
-                      });
+                        twit.post('statuses/update', {status: status}, function (err, data, response) {
+                            console.log(data)
+                            console.log(err);
+                        });
 
                     });
                 });
@@ -320,12 +322,18 @@ stream.on('tweet', function (tweet) {
                         event: eventId
                     };
 
-                    // tweet to the user
-                    var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + base_uri + "d/" + donation.reference;
-                    console.log(status);
-                    twit.post('statuses/update', { status: status }, function(err, data, response) {
-                        console.log(data);
-                      });
+                    donationCollection.insert(donation, {}, function () {
+
+
+                        var shortUrl = base_uri + "d/" + donation.reference;
+                        // tweet @ screen_name the above message
+                        var status = "Hi @" + tweet.user.screen_name + ", here's a link to donate to " + eventName + ": " + shortUrl;
+                        console.log(status);
+                        twit.post('statuses/update', {status: status}, function (err, data, response) {
+                            console.log(data)
+                            console.log(err);
+                        });
+                    });
                 });
             }
         });
@@ -334,7 +342,7 @@ stream.on('tweet', function (tweet) {
 
 
 app.get('/', function (req, res) {
-  res.render('index', { title: 'Hey', message: 'Hello there!'});
+    res.render('index', {title: 'Hey', message: 'Hello there!'});
 });
 
 

@@ -1,155 +1,94 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'bitlyapi' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
 4 warn package.json giverandom@0.1.0 No README data
-5 verbose readDependencies using package.json deps
-6 verbose install where, deps [ '/Users/Antony/Documents/hackference/giverandom',
-6 verbose install   [ 'body-parser',
-6 verbose install     'express',
-6 verbose install     'jade',
-6 verbose install     'mongodb',
-6 verbose install     'request',
-6 verbose install     'twilio',
-6 verbose install     'twit',
-6 verbose install     'util' ] ]
-7 info preinstall giverandom@0.1.0
-8 verbose readDependencies using package.json deps
-9 verbose already installed skipping jade@^1.7.0 /Users/Antony/Documents/hackference/giverandom
-10 verbose already installed skipping mongodb@1.3.20 /Users/Antony/Documents/hackference/giverandom
-11 verbose already installed skipping request@2.34.0 /Users/Antony/Documents/hackference/giverandom
-12 verbose already installed skipping twilio@1.7.0 /Users/Antony/Documents/hackference/giverandom
-13 verbose cache add [ 'twit@0.9.9', null ]
-14 verbose cache add name=undefined spec="twit@0.9.9" args=["twit@0.9.9",null]
-15 verbose parsed url { protocol: null,
-15 verbose parsed url   slashes: null,
-15 verbose parsed url   auth: null,
-15 verbose parsed url   host: null,
-15 verbose parsed url   port: null,
-15 verbose parsed url   hostname: null,
-15 verbose parsed url   hash: null,
-15 verbose parsed url   search: null,
-15 verbose parsed url   query: null,
-15 verbose parsed url   pathname: 'twit@0.9.9',
-15 verbose parsed url   path: 'twit@0.9.9',
-15 verbose parsed url   href: 'twit@0.9.9' }
-16 verbose cache add [ 'util@0.10.3', null ]
-17 verbose cache add name=undefined spec="util@0.10.3" args=["util@0.10.3",null]
-18 verbose parsed url { protocol: null,
-18 verbose parsed url   slashes: null,
-18 verbose parsed url   auth: null,
-18 verbose parsed url   host: null,
-18 verbose parsed url   port: null,
-18 verbose parsed url   hostname: null,
-18 verbose parsed url   hash: null,
-18 verbose parsed url   search: null,
-18 verbose parsed url   query: null,
-18 verbose parsed url   pathname: 'util@0.10.3',
-18 verbose parsed url   path: 'util@0.10.3',
-18 verbose parsed url   href: 'util@0.10.3' }
-19 verbose already installed skipping body-parser@^1.8.3 /Users/Antony/Documents/hackference/giverandom
-20 verbose already installed skipping express@~3.4.x /Users/Antony/Documents/hackference/giverandom
-21 verbose cache add name="twit" spec="0.9.9" args=["twit","0.9.9"]
-22 verbose parsed url { protocol: null,
-22 verbose parsed url   slashes: null,
-22 verbose parsed url   auth: null,
-22 verbose parsed url   host: null,
-22 verbose parsed url   port: null,
-22 verbose parsed url   hostname: null,
-22 verbose parsed url   hash: null,
-22 verbose parsed url   search: null,
-22 verbose parsed url   query: null,
-22 verbose parsed url   pathname: '0.9.9',
-22 verbose parsed url   path: '0.9.9',
-22 verbose parsed url   href: '0.9.9' }
-23 verbose addNamed [ 'twit', '0.9.9' ]
-24 verbose addNamed [ '0.9.9', '0.9.9' ]
-25 verbose cache add name="util" spec="0.10.3" args=["util","0.10.3"]
-26 verbose parsed url { protocol: null,
-26 verbose parsed url   slashes: null,
-26 verbose parsed url   auth: null,
-26 verbose parsed url   host: null,
-26 verbose parsed url   port: null,
-26 verbose parsed url   hostname: null,
-26 verbose parsed url   hash: null,
-26 verbose parsed url   search: null,
-26 verbose parsed url   query: null,
-26 verbose parsed url   pathname: '0.10.3',
-26 verbose parsed url   path: '0.10.3',
-26 verbose parsed url   href: '0.10.3' }
-27 verbose addNamed [ 'util', '0.10.3' ]
-28 verbose addNamed [ '0.10.3', '0.10.3' ]
-29 silly lockFile 89831822-twit-0-9-9 twit@0.9.9
-30 verbose lock twit@0.9.9 /Users/Antony/.npm/89831822-twit-0-9-9.lock
-31 silly lockFile 16434265-util-0-10-3 util@0.10.3
-32 verbose lock util@0.10.3 /Users/Antony/.npm/16434265-util-0-10-3.lock
-33 verbose request where is /util
-34 verbose request registry https://registry.npmjs.org/
-35 verbose request id 723dfac864fa2f16
-36 verbose url raw /util
-37 verbose url resolving [ 'https://registry.npmjs.org/', './util' ]
-38 verbose url resolved https://registry.npmjs.org/util
-39 verbose request where is https://registry.npmjs.org/util
-40 info trying registry request attempt 1 at 01:56:13
-41 verbose etag "40DKGPZR76I336M5C5WO8INMV"
-42 http GET https://registry.npmjs.org/util
-43 verbose request where is /twit
-44 verbose request registry https://registry.npmjs.org/
-45 verbose url raw /twit
-46 verbose url resolving [ 'https://registry.npmjs.org/', './twit' ]
-47 verbose url resolved https://registry.npmjs.org/twit
-48 verbose request where is https://registry.npmjs.org/twit
-49 info trying registry request attempt 1 at 01:56:13
-50 verbose etag "DZZMLRSHFBX1XPBQN4TTXGI2M"
-51 http GET https://registry.npmjs.org/twit
-52 http 304 https://registry.npmjs.org/util
-53 silly registry.get cb [ 304,
-53 silly registry.get   { date: 'Sun, 21 Sep 2014 00:56:13 GMT',
-53 silly registry.get     server: 'Apache',
-53 silly registry.get     via: '1.1 varnish',
-53 silly registry.get     'last-modified': 'Sun, 21 Sep 2014 00:56:13 GMT',
-53 silly registry.get     'cache-control': 'max-age=60',
-53 silly registry.get     etag: '"40DKGPZR76I336M5C5WO8INMV"',
-53 silly registry.get     'x-served-by': 'cache-fra1232-FRA',
-53 silly registry.get     'x-cache': 'HIT',
-53 silly registry.get     'x-cache-hits': '1',
-53 silly registry.get     'x-timer': 'S1411260973.401255,VS0,VE104',
-53 silly registry.get     vary: 'Accept',
-53 silly registry.get     'content-length': '0',
-53 silly registry.get     'keep-alive': 'timeout=10, max=50',
-53 silly registry.get     connection: 'Keep-Alive' } ]
-54 verbose etag https://registry.npmjs.org/util from cache
-55 silly lockFile 16434265-util-0-10-3 util@0.10.3
-56 silly lockFile 16434265-util-0-10-3 util@0.10.3
-57 http 304 https://registry.npmjs.org/twit
-58 silly registry.get cb [ 304,
-58 silly registry.get   { date: 'Sun, 21 Sep 2014 00:56:13 GMT',
-58 silly registry.get     server: 'Apache',
-58 silly registry.get     via: '1.1 varnish',
-58 silly registry.get     'last-modified': 'Sun, 21 Sep 2014 00:56:14 GMT',
-58 silly registry.get     'cache-control': 'max-age=60',
-58 silly registry.get     etag: '"DZZMLRSHFBX1XPBQN4TTXGI2M"',
-58 silly registry.get     'x-served-by': 'cache-fra1227-FRA',
-58 silly registry.get     'x-cache': 'MISS',
-58 silly registry.get     'x-cache-hits': '0',
-58 silly registry.get     'x-timer': 'S1411260973.401956,VS0,VE1038',
-58 silly registry.get     vary: 'Accept',
-58 silly registry.get     'content-length': '0',
-58 silly registry.get     'keep-alive': 'timeout=10, max=50',
-58 silly registry.get     connection: 'Keep-Alive' } ]
-59 verbose etag https://registry.npmjs.org/twit from cache
-60 silly lockFile 89831822-twit-0-9-9 twit@0.9.9
-61 silly lockFile 89831822-twit-0-9-9 twit@0.9.9
-62 error Error: version not found: twit@0.9.9
-62 error     at /usr/local/lib/node_modules/npm/lib/cache/add-named.js:125:12
-62 error     at saved (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/get.js:167:7)
-62 error     at Object.oncomplete (fs.js:107:15)
-63 error If you need help, you may report this *entire* log,
-63 error including the npm and node versions, at:
-63 error     <http://github.com/npm/npm/issues>
-64 error System Darwin 13.3.0
-65 error command "node" "/usr/local/bin/npm" "install"
-66 error cwd /Users/Antony/Documents/hackference/giverandom
-67 error node -v v0.10.32
-68 error npm -v 1.4.28
-69 verbose exit [ 1, true ]
+5 warn package.json util@0.10.3 util is also the name of a node core module.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'bitlyapi@0.4.0', null ]
+8 verbose cache add name=undefined spec="bitlyapi@0.4.0" args=["bitlyapi@0.4.0",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'bitlyapi@0.4.0',
+9 verbose parsed url   path: 'bitlyapi@0.4.0',
+9 verbose parsed url   href: 'bitlyapi@0.4.0' }
+10 verbose cache add name="bitlyapi" spec="0.4.0" args=["bitlyapi","0.4.0"]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: '0.4.0',
+11 verbose parsed url   path: '0.4.0',
+11 verbose parsed url   href: '0.4.0' }
+12 verbose addNamed [ 'bitlyapi', '0.4.0' ]
+13 verbose addNamed [ '0.4.0', '0.4.0' ]
+14 silly lockFile b7e2a8c1-bitlyapi-0-4-0 bitlyapi@0.4.0
+15 verbose lock bitlyapi@0.4.0 /Users/Stephen/.npm/b7e2a8c1-bitlyapi-0-4-0.lock
+16 verbose request where is /bitlyapi
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 697594183d89d94c
+19 verbose url raw /bitlyapi
+20 verbose url resolving [ 'https://registry.npmjs.org/', './bitlyapi' ]
+21 verbose url resolved https://registry.npmjs.org/bitlyapi
+22 verbose request where is https://registry.npmjs.org/bitlyapi
+23 info trying registry request attempt 1 at 02:43:22
+24 http GET https://registry.npmjs.org/bitlyapi
+25 http 404 https://registry.npmjs.org/bitlyapi
+26 verbose headers { date: 'Sun, 21 Sep 2014 01:43:23 GMT',
+26 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 verbose headers   'content-type': 'application/json',
+26 verbose headers   'cache-control': 'max-age=0',
+26 verbose headers   'content-length': '52',
+26 verbose headers   'accept-ranges': 'bytes',
+26 verbose headers   via: '1.1 varnish',
+26 verbose headers   age: '0',
+26 verbose headers   'x-served-by': 'cache-fra1221-FRA',
+26 verbose headers   'x-cache': 'MISS',
+26 verbose headers   'x-cache-hits': '0',
+26 verbose headers   'x-timer': 'S1411263803.058718,VS0,VE442',
+26 verbose headers   'keep-alive': 'timeout=10, max=50',
+26 verbose headers   connection: 'Keep-Alive' }
+27 silly registry.get cb [ 404,
+27 silly registry.get   { date: 'Sun, 21 Sep 2014 01:43:23 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=0',
+27 silly registry.get     'content-length': '52',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     'x-served-by': 'cache-fra1221-FRA',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1411263803.058718,VS0,VE442',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly lockFile b7e2a8c1-bitlyapi-0-4-0 bitlyapi@0.4.0
+29 silly lockFile b7e2a8c1-bitlyapi-0-4-0 bitlyapi@0.4.0
+30 error 404 404 Not Found: bitlyapi
+30 error 404
+30 error 404 'bitlyapi' is not in the npm registry.
+30 error 404 You should bug the author to publish it
+30 error 404 It was specified as a dependency of 'giverandom'
+30 error 404
+30 error 404 Note that you can also install from a
+30 error 404 tarball, folder, or http url, or git url.
+31 error System Darwin 13.4.0
+32 error command "node" "/usr/local/bin/npm" "install" "bitlyapi"
+33 error cwd /Users/Stephen/Documents/Projects/2014/hackference/giverandom
+34 error node -v v0.10.32
+35 error npm -v 1.4.28
+36 error code E404
+37 verbose exit [ 1, true ]

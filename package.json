@@ -14,7 +14,8 @@
     "request": "2.34.0",
     "twilio": "1.7.0",
     "twit": "0.9.9",
-    "util": "0.10.3"
+    "util": "0.10.3",
+    "node-bitlyapi": "0.4.0"
   },
   "engines": {
     "node": "0.10.x"
