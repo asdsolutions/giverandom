@@ -38,7 +38,7 @@ var client = require('twilio')(accountSid, authToken);
 //var justGivingUri = "http://v3-sandbox.justgiving.com/";
 var justGivingUri = "http://www.justgiving.com/";
 
-var base_uri = "http://lit-taiga-6522.herokuapp.com/";
+var base_uri = "http://giverandom.herokuapp.com/";
 
 var mongo = require('mongodb');
 
